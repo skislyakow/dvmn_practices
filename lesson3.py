@@ -13,8 +13,8 @@ my_name = "Сергей Кисляков"
 email_from = "kislyakov84@yandex.ru"
 email_to = "s.kislyakov84@gmail.com"
 
-letter = """From: kislyakov84@yandex.ru
-To: s.kislyakov84@gmail.com
+letter = f"""From: {email_from}
+To: {email_to}
 Subject: Приглашение!
 Content-Type: text/plain; charset="UTF-8";
 
