@@ -1,14 +1,10 @@
-import os
-
-from dotenv import load_dotenv
+from decouple import config
 from pytimeparse import parse
 
 import ptbot
 
 
-load_dotenv()
-
-TG_TOKEN = os.environ['TG_TOKEN']
+TG_TOKEN = config('TG_TOKEN')
 BOT = ptbot.Bot(TG_TOKEN)
 
 
