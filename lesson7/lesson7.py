@@ -7,7 +7,7 @@ import ptbot
 TG_TOKEN = config('TG_TOKEN')
 
 
-def wait(chat_id, message):
+def wait(chat_id, message, bot):
 	message_to_seconds = parse(message)
 	message_id = bot.send_message(chat_id, 'Таймер')
 	bot.create_countdown(
@@ -16,20 +16,22 @@ def wait(chat_id, message):
 		chat_id=chat_id, 
 		message_id=message_id, 
 		message_to_seconds=message_to_seconds,
+		bot=bot,
 	)	
 	bot.create_timer(
 		message_to_seconds, 
 		notify, 
 		chat_id=chat_id, 
 		message=message,
+		bot=bot
 	)
 	
 
-def notify(chat_id, message):
+def notify(chat_id, message, bot):
 	bot.send_message(chat_id, 'Время вышло!')
 	
 
-def notify_progress(secs_left, chat_id, message_id, message_to_seconds):
+def notify_progress(secs_left, chat_id, message_id, message_to_seconds, bot):
 	bot.update_message(
 		chat_id, message_id, 
 		'Осталось {} секунд\n'.format(secs_left)
@@ -57,11 +59,11 @@ def render_progressbar(
     return '{0} |{1}| {2}% {3}'.format(prefix, pbar, percent, suffix)
 
 
-def main():		
-	bot.reply_on_message(wait)
+def main():
+	bot = ptbot.Bot(TG_TOKEN)
+	bot.reply_on_message(wait, bot=bot)
 	bot.run_bot()
 
 
 if __name__ == '__main__':
-	bot = ptbot.Bot(TG_TOKEN)	
 	main()
